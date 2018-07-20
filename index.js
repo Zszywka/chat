@@ -17,27 +17,29 @@ app.use(express.static(__dirname + '/public'));
 //create simple listening routing
 //which will return the index.html file in response
 app.get('/', function(req, res){
-  res.sendFile(__dirname + '/index.html');
+  res.sendFile(__dirname + '/public/index.html');
 });
 //listening for connecting a new chat user
 //socket-> a new chat user
+//co sie dzieje po podlaczeniu usera
 io.on('connection', function(socket) {
-  //miejsce dla funkcji, które zostaną wykonane po podłączeniu klienta
-});
-// klient nasłuchuje na wiadomość wejścia do czatu
-//nasluch na zdarzenie join
-socket.on('join', function(name){
-  // użytkownika, który pojawił się w aplikacji zapisujemy do serwisu trzymającego listę osób w czacie
-  userService.addUser({
-    id: socket.id,
-    name
+  // klient nasłuchuje na wiadomość wejścia do czatu
+  //nasluch na zdarzenie join
+  socket.on('join', function(name){
+    // użytkownika, który pojawił się w aplikacji zapisujemy do serwisu trzymającego listę osób w czacie
+    userService.addUser({
+      id: socket.id,
+      name
+    });
+    // aplikacja emituje zdarzenie update, które aktualizuje
+    //informację na temat listy użytkowników każdemu nasłuchującemu na wydarzenie 'update'
+    io.emit('update', {
+      users: userService.getAllUsers()
+    });
   });
-  // aplikacja emituje zdarzenie update, które aktualizuje
-  //informację na temat listy użytkowników każdemu nasłuchującemu na wydarzenie 'update'
-  io.emit('update', {
-    users: userService.getAllUsers()
-  });
+
 });
+
 //closing the chat by the user
 io.on('connection', function(socket) {
   //when the connection is broken

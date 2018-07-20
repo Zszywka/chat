@@ -5,11 +5,14 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeJsPlugin = require('optimize-js-plugin');
 
 // if we are in dev mode, we have only HtmlWebpackPlugin
-const plugins = [new HtmlWebpackPlugin({
+const plugins = [
+  new HtmlWebpackPlugin({
     template: './index.html',
     filename: 'index.html',
     inject: 'body'
-})];
+  }),
+  new webpack.HotModuleReplacementPlugin();
+],
 
 module.exports = (env) => {
   if (env === 'production') {
