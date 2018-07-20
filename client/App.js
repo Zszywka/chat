@@ -5,15 +5,16 @@ import React, { Component } from 'react';
 import io from 'socket.io-client';
 
 import styles from './App.css';
-import MessageForm from './MessageForm.css';
-import MessageList from './MessageList.css';
-import UsersList from './UsersList.css';
-import UserForm from './UserForm.css';
+import MessageForm from './MessageForm';
+import MessageList from './MessageList';
+import UsersList from './UsersList';
+import UserForm from './UserForm';
 
 //connecting to a server in the namespace ('/')
 const socket = io('/');
 
 //create class App
+// komponenty-kontenery(posiadają swój wewnętrzny stan)-class
 class App extends Component {
   //initial state app
   constructor(props) {
@@ -71,12 +72,8 @@ class App extends Component {
     return (
       <div className={styles.App}>
         <div className={styles.AppHeader}>
-          <div className={styles.AppTitle}>
-            ChatApp
-          </div>
-          <div className={styles.AppRoom}>
-            App room
-          </div>
+          <div className={styles.AppTitle}>Your Chat</div>
+          <div className={styles.AppRoom}>Room For Pets Friends</div>
         </div>
         <div className={styles.AppBody}>
           <UsersList users={this.state.users}/>

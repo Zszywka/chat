@@ -11,3 +11,5 @@ WARNING:
 -> npm run build
 3. Run server:
 -> node index.js
+4. Open in the browser:
+-> localhost:3000

@@ -37,25 +37,8 @@ io.on('connection', function(socket) {
       users: userService.getAllUsers()
     });
   });
-
-});
-
-//closing the chat by the user
-io.on('connection', function(socket) {
-  //when the connection is broken
-  socket.on('disconnect', () => {
-    //removes the user from the list of people in the chat
-    userService.removeUser(socket.id);
-    //user emited last message(socket.broadcast.emit->sent for everyone without you)
-    //(socket.emit -> send message for everyone with you)
-    socket.broadcast.emit('update', {
-      users: userService.getAllUsers()
-    });
-  });
-});
-//sending messages in the chat
-io.on('connection', function(socket) {
-//soclet-> user who send the message in the chat
+  //sending messages in the chat
+  //soclet-> user who send the message in the chat
   socket.on('message', function(message){
     //na liscie uzytkownikow szukamy wyciagamy id tego ktory wysyla wiadomosc,
     //mamy imie tego ktorego id wskazemy
@@ -67,7 +50,19 @@ io.on('connection', function(socket) {
       from: name
     });
   });
+  //closing the chat by the user
+  //when the connection is broken
+  socket.on('disconnect', () => {
+    //removes the user from the list of people in the chat
+    userService.removeUser(socket.id);
+    //user emited last message(socket.broadcast.emit->sent for everyone without you)
+    //(socket.emit -> send message for everyone with you)
+    socket.broadcast.emit('update', {
+      users: userService.getAllUsers()
+    });
+  });
 });
+
 //runs the server (routing)
 //listens to inquiries from clients
 server.listen(3000, function(){
