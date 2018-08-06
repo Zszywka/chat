@@ -13,3 +13,8 @@ WARNING:
 -> node index.js
 4. Open in the browser:
 -> localhost:3000
+
+You can use:
+-> npm start
+and open in the browser:
+http://localhost:8080/
